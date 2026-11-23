@@ -12,12 +12,10 @@ export interface CutoutRevealProps extends Omit<HTMLMotionProps<"div">, "initial
 }
 
 const EDITORIAL_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
-const REVERSE_EASE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
 /**
  * Specially designed for transparent fish cutouts and layered hero assets.
- * Avoids heavy directional slide-ins or aggressive reverse shifts that cause
- * clipping or visual jarring, anchoring the specimen with subtle depth settling.
+ * Fades in once on initial scroll-down and remains permanently settled.
  */
 export const CutoutReveal: React.FC<CutoutRevealProps> = ({
   children,
@@ -25,7 +23,7 @@ export const CutoutReveal: React.FC<CutoutRevealProps> = ({
   delay = 0.1,
   duration = 0.8,
   floatDistance = 6,
-  once = false,
+  once = true,
   style,
   ...rest
 }) => {
@@ -35,10 +33,6 @@ export const CutoutReveal: React.FC<CutoutRevealProps> = ({
         opacity: 0.35,
         scale: 0.985,
         y: floatDistance,
-        transition: {
-          duration: 0.5,
-          ease: REVERSE_EASE,
-        },
       }}
       whileInView={{
         opacity: 1,
@@ -64,4 +58,3 @@ export const CutoutReveal: React.FC<CutoutRevealProps> = ({
 };
 
 export default CutoutReveal;
-

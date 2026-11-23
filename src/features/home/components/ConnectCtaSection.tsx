@@ -23,7 +23,7 @@ export const ConnectCtaSection: React.FC<ConnectCtaSectionProps> = ({
         delay={0.02}
         distance={0}
         depth={false}
-        once={false}
+        once={true}
         className="pointer-events-none absolute inset-0 w-full h-full z-0"
       >
         <svg
@@ -51,8 +51,8 @@ export const ConnectCtaSection: React.FC<ConnectCtaSectionProps> = ({
           revealDistance={12}
           delay={0.06}
           maxTilt={1.8}
-          interactive={true}
-          once={false}
+          interactive={false}
+          once={true}
         >
           <div className="relative w-full bg-[#141414] text-white px-7 py-11 sm:px-14 sm:py-16 shadow-[3px_3px_0px_#C81D77]">
             {/* Faint Dashed Arc Continuation Inside Dark Card */}
@@ -75,7 +75,7 @@ export const ConnectCtaSection: React.FC<ConnectCtaSectionProps> = ({
             {/* Left Typography & Dual Buttons */}
             <div className="relative z-10 max-w-[540px]">
               {/* Green Mono Eyebrow */}
-              <ScrollReveal delay={0.1} distance={8} depth={false} once={false}>
+              <ScrollReveal delay={0.1} distance={8} depth={false} once={true}>
                 <div className="mb-4">
                   <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.14em] uppercase text-[#1E8E5A]">
                     05 // CONNECT WITH US
@@ -84,7 +84,7 @@ export const ConnectCtaSection: React.FC<ConnectCtaSectionProps> = ({
               </ScrollReveal>
 
               {/* Two-Line Condensed Headline */}
-              <ScrollReveal delay={0.16} distance={10} depth={true} once={false}>
+              <ScrollReveal delay={0.16} distance={10} depth={true} once={true}>
                 <h2 className="font-display text-[48px] sm:text-[64px] xl:text-[74px] leading-[0.94] tracking-[0.01em] uppercase text-white mb-8">
                   YOUR AQUATIC
                   <br />
@@ -93,7 +93,7 @@ export const ConnectCtaSection: React.FC<ConnectCtaSectionProps> = ({
               </ScrollReveal>
 
               {/* CTA Action Row */}
-              <ScrollReveal delay={0.24} distance={10} depth={false} once={false}>
+              <ScrollReveal delay={0.24} distance={10} depth={false} once={true}>
                 <div className="flex flex-wrap items-center gap-4">
                   {/* Primary Solid Off-White Button */}
                   <button
@@ -136,7 +136,7 @@ export const ConnectCtaSection: React.FC<ConnectCtaSectionProps> = ({
                 delay={0.18}
                 duration={0.8}
                 floatDistance={6}
-                once={false}
+                once={true}
                 className="w-full h-full flex justify-end items-center"
               >
                 <img

@@ -12,12 +12,11 @@ export interface PerspectiveCardProps extends Omit<HTMLMotionProps<"div">, "init
   delay?: number;
   /** Initial subtle vertical reveal distance (8px - 14px) */
   revealDistance?: number;
-  /** Bidirectional scroll */
+  /** Play once on initial scroll-down */
   once?: boolean;
 }
 
 const EDITORIAL_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
-const REVERSE_EASE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
 export const PerspectiveCard: React.FC<PerspectiveCardProps> = ({
   children,
@@ -26,7 +25,7 @@ export const PerspectiveCard: React.FC<PerspectiveCardProps> = ({
   interactive = true,
   delay = 0,
   revealDistance = 10,
-  once = false,
+  once = true,
   style,
   ...rest
 }) => {
@@ -82,10 +81,6 @@ export const PerspectiveCard: React.FC<PerspectiveCardProps> = ({
         rotateX: 2.5,
         scale: 0.985,
         transformPerspective: 1200,
-        transition: {
-          duration: 0.45,
-          ease: REVERSE_EASE,
-        },
       }}
       whileInView={{
         opacity: 1,

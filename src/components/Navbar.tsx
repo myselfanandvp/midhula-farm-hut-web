@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface NavbarProps {
   brandName?: string;
@@ -16,6 +16,13 @@ export const Navbar: React.FC<NavbarProps> = ({
   onMenuToggle,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const handleToggle = () => {
     const next = !menuOpen;
@@ -24,7 +31,14 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#141414] border-b border-[#262626] select-none font-mono">
+    <header
+      className="sticky top-0 z-50 w-full select-none font-mono transition-all duration-300"
+      style={{
+        backgroundColor: scrolled ? "rgba(20,20,20,0.97)" : "#141414",
+        borderBottom: scrolled ? "1px solid #2D2D2D" : "1px solid #262626",
+        backdropFilter: scrolled ? "blur(12px)" : "none",
+      }}
+    >
       <nav
         aria-label="Primary Navigation"
         className="w-full max-w-[1440px] mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between gap-4"

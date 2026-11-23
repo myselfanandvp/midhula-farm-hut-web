@@ -21,6 +21,7 @@ const DEFAULT_SPECIES: SpeciesItem[] = [
     description:
       "Sculpted Halfmoon and Koi Betta varieties celebrated for flowing finnage and bold colour.",
     accent: "magenta",
+    imageSrc: "/images/instagram/gallery-tank-2.jpg",
   },
   {
     id: "guppies",
@@ -30,6 +31,7 @@ const DEFAULT_SPECIES: SpeciesItem[] = [
     description:
       "High-contrast ribbon and mosaic guppy strains selected for tail symmetry and vibrant iridescence.",
     accent: "green",
+    imageSrc: "/images/instagram/gallery-tank-1.jpg",
   },
   {
     id: "angel-fish",
@@ -39,6 +41,7 @@ const DEFAULT_SPECIES: SpeciesItem[] = [
     description:
       "Graceful long-finned and marble angelfish lineages bred for poise, height, and clean banding.",
     accent: "magenta",
+    imageSrc: "/images/instagram/gallery-aquascape.jpg",
   },
   {
     id: "koi-ornamental",
@@ -48,6 +51,7 @@ const DEFAULT_SPECIES: SpeciesItem[] = [
     description:
       "Striking colour-blocked koi and pond-ready ornamental fish raised under controlled conditions.",
     accent: "green",
+    imageSrc: "/images/instagram/gallery-betta.jpg",
   },
   {
     id: "cichlids-flowerhorn",
@@ -57,6 +61,7 @@ const DEFAULT_SPECIES: SpeciesItem[] = [
     description:
       "Characterful cichlids and pearl-marked Flowerhorn specimens prized for presence and form.",
     accent: "magenta",
+    imageSrc: "/images/instagram/gallery-tank-2.jpg",
   },
   {
     id: "freshwater-species",
@@ -66,6 +71,7 @@ const DEFAULT_SPECIES: SpeciesItem[] = [
     description:
       "Complementary schooling and bottom-dwelling freshwater species suited to balanced aquascapes.",
     accent: "green",
+    imageSrc: "/images/instagram/gallery-tank-1.jpg",
   },
 ];
 
@@ -102,7 +108,7 @@ export const AquaticPortfolioSection: React.FC<AquaticPortfolioSectionProps> = (
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12 sm:mb-16">
           <div>
             {/* Magenta Eyebrow Pill */}
-            <ScrollReveal delay={0.06} distance={8} depth={false} once={false}>
+            <ScrollReveal delay={0.06} distance={8} depth={false} once={true}>
               <div className="mb-5">
                 <span className="inline-block bg-[#C81D77] text-white font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.14em] uppercase px-2.5 py-1 leading-none">
                   02 // CURATED PORTFOLIO
@@ -111,7 +117,7 @@ export const AquaticPortfolioSection: React.FC<AquaticPortfolioSectionProps> = (
             </ScrollReveal>
 
             {/* Display Headline */}
-            <ScrollReveal delay={0.12} distance={10} depth={true} once={false}>
+            <ScrollReveal delay={0.12} distance={10} depth={true} once={true}>
               <h2 className="font-display text-[48px] sm:text-[68px] xl:text-[76px] leading-[0.94] tracking-[0.01em] uppercase text-white">
                 MEET THE AQUATIC WORLD.
               </h2>
@@ -119,7 +125,7 @@ export const AquaticPortfolioSection: React.FC<AquaticPortfolioSectionProps> = (
           </div>
 
           {/* Right Helper Prompt */}
-          <ScrollReveal delay={0.18} distance={8} depth={false} once={false}>
+          <ScrollReveal delay={0.18} distance={8} depth={false} once={true}>
             <p className="font-mono text-[10px] sm:text-[11px] leading-[1.6] tracking-[0.06em] text-[#9E9E9A] max-w-[270px] lg:pb-1">
               Hover or select any numbered variety to inspect our documented ornamental fish
               collection.
@@ -131,7 +137,7 @@ export const AquaticPortfolioSection: React.FC<AquaticPortfolioSectionProps> = (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           {/* Left Column: Numbered Species List (01 - 06) */}
           <div className="lg:col-span-6 flex flex-col border-t border-[#262626]">
-            <StaggerGroup staggerDelay={0.05} delayChildren={0.08} once={false}>
+            <StaggerGroup staggerDelay={0.05} delayChildren={0.08} once={true}>
               {items.map((item) => {
                 const isActive = item.id === activeItem?.id;
                 const numberColorClass =
@@ -195,8 +201,8 @@ export const AquaticPortfolioSection: React.FC<AquaticPortfolioSectionProps> = (
               revealDistance={12}
               delay={0.14}
               maxTilt={2.2}
-              interactive={true}
-              once={false}
+              interactive={false}
+              once={true}
             >
               <div className="w-full bg-[#181818] border border-[#2C2C2C] shadow-[4px_4px_0px_#C81D77] flex flex-col">
                 {/* Media Preview Viewport with subtle AnimatePresence Cross-fade */}

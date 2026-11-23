@@ -14,7 +14,7 @@ export interface ScrollRevealProps extends Omit<HTMLMotionProps<"div">, "initial
   duration?: number;
   /** Enable subtle 3D perspective and depth settling (rotateX & scale) */
   depth?: boolean;
-  /** Whether the animation should only play once. Default is false for bidirectional scroll */
+  /** Whether the animation should only play once on initial scroll-down. Default is true */
   once?: boolean;
   /** Viewport amount required to trigger (0.0 to 1.0) */
   amount?: number | "some" | "all";
@@ -31,7 +31,6 @@ export interface ScrollRevealProps extends Omit<HTMLMotionProps<"div">, "initial
  * weighted stop matching high-end brutalist publication design.
  */
 const EDITORIAL_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
-const REVERSE_EASE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
 export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   children,
@@ -41,7 +40,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   delay = 0,
   duration = 0.65,
   depth = true,
-  once = false,
+  once = true,
   amount = 0.15,
   margin = "-20px 0px -20px 0px",
   customInitial,
@@ -61,10 +60,6 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
     rotateX: depth ? 2.5 : 0,
     scale: depth ? 0.985 : 1,
     transformPerspective: 1200,
-    transition: {
-      duration: 0.45,
-      ease: REVERSE_EASE,
-    },
   };
 
   const visibleValues: TargetAndTransition = customVisible ?? {
@@ -98,4 +93,3 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
 };
 
 export default ScrollReveal;
-

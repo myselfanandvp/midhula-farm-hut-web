@@ -27,7 +27,7 @@ export const YouTubeShowcasePage: React.FC<YouTubeShowcasePageProps> = ({
           delay={0.02}
           distance={0}
           depth={false}
-          once={false}
+          once={true}
           className="pointer-events-none absolute inset-0 w-full h-full z-0"
         >
           <svg
@@ -62,7 +62,7 @@ export const YouTubeShowcasePage: React.FC<YouTubeShowcasePageProps> = ({
                 </button>
               )}
 
-              <ScrollReveal delay={0.06} distance={8} depth={false} once={false}>
+              <ScrollReveal delay={0.06} distance={8} depth={false} once={true}>
                 <div className="mb-3.5">
                   <span className="inline-block bg-[#1E8E5A] text-[#0A1F14] font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.14em] uppercase px-2.5 py-1 leading-none">
                     05 // YOUTUBE CHANNEL ARCHIVE
@@ -70,14 +70,14 @@ export const YouTubeShowcasePage: React.FC<YouTubeShowcasePageProps> = ({
                 </div>
               </ScrollReveal>
 
-              <ScrollReveal delay={0.12} distance={10} depth={true} once={false}>
+              <ScrollReveal delay={0.12} distance={10} depth={true} once={true}>
                 <h1 className="font-display text-[48px] sm:text-[66px] xl:text-[76px] leading-[0.94] tracking-[0.01em] uppercase text-[#141414]">
                   MOTION FROM THE FARM.
                 </h1>
               </ScrollReveal>
             </div>
 
-            <ScrollReveal delay={0.18} distance={8} depth={false} once={false}>
+            <ScrollReveal delay={0.18} distance={8} depth={false} once={true}>
               <p className="font-mono text-[10px] sm:text-[11px] leading-[1.65] tracking-[0.06em] text-[#525250] max-w-[300px] lg:pb-1">
                 Select any reel in the index to load it in the sticky screening deck or open it
                 directly on YouTube.
@@ -95,7 +95,7 @@ export const YouTubeShowcasePage: React.FC<YouTubeShowcasePageProps> = ({
                 delay={0.1}
                 maxTilt={1.8}
                 interactive={true}
-                once={false}
+                once={true}
               >
                 <div className="w-full bg-[#141414] text-white border border-[#141414] shadow-[4px_4px_0px_#C81D77] overflow-hidden">
                   {/* Top Telemetry Strip */}
@@ -173,7 +173,7 @@ export const YouTubeShowcasePage: React.FC<YouTubeShowcasePageProps> = ({
 
             {/* Right Column: Editorial Reel Index Cards */}
             <div className="lg:col-span-5 flex flex-col gap-4">
-              <StaggerGroup staggerDelay={0.05} delayChildren={0.08} once={false}>
+              <StaggerGroup staggerDelay={0.05} delayChildren={0.08} once={true}>
                 {videos.map((video) => {
                   const isActive = video.id === selectedVideo.id;
                   const indexColor =
@@ -185,7 +185,7 @@ export const YouTubeShowcasePage: React.FC<YouTubeShowcasePageProps> = ({
                         revealDistance={0}
                         maxTilt={1.8}
                         interactive={true}
-                        once={false}
+                        once={true}
                         className="w-full"
                       >
                         <button

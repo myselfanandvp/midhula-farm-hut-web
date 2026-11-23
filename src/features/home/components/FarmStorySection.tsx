@@ -19,7 +19,7 @@ export const FarmStorySection: React.FC<FarmStorySectionProps> = ({
         delay={0.02}
         distance={0}
         depth={false}
-        once={false}
+        once={true}
         className="pointer-events-none absolute inset-0 w-full h-full z-0"
       >
         <svg
@@ -50,13 +50,13 @@ export const FarmStorySection: React.FC<FarmStorySectionProps> = ({
               revealDistance={12}
               delay={0.06}
               maxTilt={2.0}
-              interactive={true}
-              once={false}
+              interactive={false}
+              once={true}
             >
               <div className="relative w-full aspect-[1.28/1] bg-[#141414] shadow-[3px_3px_0px_#C81D77]">
                 {/* Overflowing Betta Fish Cutout (Breaks out of top & right edges) */}
                 <div className="pointer-events-none absolute -top-24 sm:-top-32 -left-4 sm:-left-6 w-[108%] z-20">
-                  <CutoutReveal delay={0.16} duration={0.8} floatDistance={6} once={false}>
+                  <CutoutReveal delay={0.16} duration={0.8} floatDistance={6} once={true}>
                     <img
                       src={fishImageSrc}
                       alt="Halfmoon Betta fish specimen"
@@ -67,7 +67,7 @@ export const FarmStorySection: React.FC<FarmStorySectionProps> = ({
 
                 {/* Bottom-Right Overlapping Dark Callout Card */}
                 <div className="absolute -bottom-8 -right-5 sm:-right-8 z-30 w-[250px] sm:w-[295px]">
-                  <ScrollReveal delay={0.22} distance={8} depth={true} once={false}>
+                  <ScrollReveal delay={0.22} distance={8} depth={true} once={true}>
                     <div className="w-full bg-[#141414] text-white p-5 sm:p-6 shadow-[0_16px_32px_rgba(0,0,0,0.28)]">
                       <div className="mb-3">
                         <span className="inline-block bg-[#1E8E5A] text-[#0A1F14] font-mono text-[9px] sm:text-[10px] font-bold tracking-[0.14em] uppercase px-2 py-0.5 leading-none">
@@ -88,7 +88,7 @@ export const FarmStorySection: React.FC<FarmStorySectionProps> = ({
           {/* Right Column: Editorial Typography */}
           <div className="lg:col-span-6 lg:pl-6 flex flex-col items-start">
             {/* Magenta Mono Eyebrow */}
-            <ScrollReveal delay={0.08} distance={8} depth={false} once={false}>
+            <ScrollReveal delay={0.08} distance={8} depth={false} once={true}>
               <div className="mb-5">
                 <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.14em] uppercase text-[#C81D77]">
                   03 // THE FARM
@@ -97,7 +97,7 @@ export const FarmStorySection: React.FC<FarmStorySectionProps> = ({
             </ScrollReveal>
 
             {/* 4-Line Stacked Display Headline */}
-            <ScrollReveal delay={0.14} distance={10} depth={true} once={false}>
+            <ScrollReveal delay={0.14} distance={10} depth={true} once={true}>
               <h2 className="font-display text-[52px] sm:text-[68px] xl:text-[78px] leading-[0.93] tracking-[0.01em] uppercase text-[#141414] mb-7">
                 RAISED WITH
                 <br />
@@ -110,7 +110,7 @@ export const FarmStorySection: React.FC<FarmStorySectionProps> = ({
             </ScrollReveal>
 
             {/* Supporting Paragraph */}
-            <ScrollReveal delay={0.22} distance={10} depth={false} once={false}>
+            <ScrollReveal delay={0.22} distance={10} depth={false} once={true}>
               <p className="text-[#525250] text-[14px] sm:text-[15px] leading-[1.65] max-w-[400px] font-normal">
                 Rooted in Kerala, Mithula Farm Hut is dedicated to the art of raising ornamental
                 freshwater fish—celebrating colour, vitality, and the quiet joy of a thriving

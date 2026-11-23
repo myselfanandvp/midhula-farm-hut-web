@@ -19,13 +19,33 @@ export interface LivingGallerySectionProps {
   bottomWideMedia?: GalleryMedia;
 }
 
+const DEFAULT_FEATURED_LEFT: GalleryMedia = {
+  src: "/images/instagram/gallery-betta.jpg",
+  alt: "Dark minimalist aquarium setup with volcanic stone and show-grade Betta",
+};
+
+const DEFAULT_TOP_MIDDLE: GalleryMedia = {
+  src: "/images/instagram/gallery-tank-1.jpg",
+  alt: "Platinum white Halfmoon Betta close-up showcase",
+};
+
+const DEFAULT_TOP_RIGHT: GalleryMedia = {
+  src: "/images/instagram/gallery-tank-2.jpg",
+  alt: "High-contrast turquoise and crimson Halfmoon Betta finnage",
+};
+
+const DEFAULT_BOTTOM_WIDE: GalleryMedia = {
+  src: "/images/instagram/gallery-aquascape.jpg",
+  alt: "Fine art editorial freshwater Betta portrait in motion",
+};
+
 export const LivingGallerySection: React.FC<LivingGallerySectionProps> = ({
   instagramHandle = "@MITHULA_FARM_HUT",
   instagramUrl = "https://instagram.com/mithula_farm_hut",
-  featuredLeftMedia,
-  topMiddleMedia,
-  topRightMedia,
-  bottomWideMedia,
+  featuredLeftMedia = DEFAULT_FEATURED_LEFT,
+  topMiddleMedia = DEFAULT_TOP_MIDDLE,
+  topRightMedia = DEFAULT_TOP_RIGHT,
+  bottomWideMedia = DEFAULT_BOTTOM_WIDE,
 }) => {
   return (
     <section
@@ -38,7 +58,7 @@ export const LivingGallerySection: React.FC<LivingGallerySectionProps> = ({
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-12">
           <div>
             {/* Green Mono Eyebrow */}
-            <ScrollReveal delay={0.06} distance={8} depth={false} once={false}>
+            <ScrollReveal delay={0.06} distance={8} depth={false} once={true}>
               <div className="mb-3.5">
                 <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.14em] uppercase text-[#1E8E5A]">
                   04 // THE LIVING GALLERY
@@ -47,7 +67,7 @@ export const LivingGallerySection: React.FC<LivingGallerySectionProps> = ({
             </ScrollReveal>
 
             {/* Display Headline */}
-            <ScrollReveal delay={0.12} distance={10} depth={true} once={false}>
+            <ScrollReveal delay={0.12} distance={10} depth={true} once={true}>
               <h2 className="font-display text-[44px] sm:text-[62px] xl:text-[72px] leading-[0.94] tracking-[0.01em] uppercase text-white">
                 THE AQUATIC WORLD, IN MOTION.
               </h2>
@@ -56,7 +76,7 @@ export const LivingGallerySection: React.FC<LivingGallerySectionProps> = ({
 
           {/* Right Off-White Instagram Handle Button with Magenta Offset Shadow */}
           <div className="shrink-0 md:pb-1">
-            <ScrollReveal delay={0.18} distance={8} depth={false} once={false}>
+            <ScrollReveal delay={0.18} distance={8} depth={false} once={true}>
               <a
                 href={instagramUrl}
                 target="_blank"
@@ -97,8 +117,8 @@ export const LivingGallerySection: React.FC<LivingGallerySectionProps> = ({
               revealDistance={12}
               delay={0.1}
               maxTilt={2.0}
-              interactive={true}
-              once={false}
+              interactive={false}
+              once={true}
             >
               <a
                 href={instagramUrl}
@@ -107,12 +127,12 @@ export const LivingGallerySection: React.FC<LivingGallerySectionProps> = ({
                 className="group w-full h-full flex flex-col border border-[#2E2E2E] bg-[#242424] overflow-hidden"
               >
                 {/* Tall Media Viewport */}
-                <div className="relative flex-1 min-h-[380px] lg:min-h-[540px] bg-[#242424] overflow-hidden">
+                <div className="relative flex-1 min-h-[380px] lg:min-h-[540px] bg-[#1a1a1a] overflow-hidden">
                   {featuredLeftMedia?.src ? (
                     <img
                       src={featuredLeftMedia.src}
                       alt={featuredLeftMedia.alt ?? "Farm tanks showcase"}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     />
                   ) : (
                     <div className="w-full h-full bg-[#242424]" />
@@ -131,7 +151,7 @@ export const LivingGallerySection: React.FC<LivingGallerySectionProps> = ({
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M3 9L9 3M9 3H4M9 3V8"
+                      d="M3 9L9 3H4M9 3V8"
                       stroke="currentColor"
                       strokeWidth="1.5"
                       strokeLinecap="square"
@@ -151,20 +171,29 @@ export const LivingGallerySection: React.FC<LivingGallerySectionProps> = ({
                 revealDistance={10}
                 delay={0.16}
                 maxTilt={2.0}
-                interactive={true}
-                once={false}
+                interactive={false}
+                once={true}
               >
-                <div className="relative aspect-[1.08/1] border border-[#2E2E2E] bg-[#242424] overflow-hidden">
+                <a
+                  href={instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative block aspect-[1.08/1] border border-[#2E2E2E] bg-[#1a1a1a] overflow-hidden"
+                >
                   {topMiddleMedia?.src ? (
                     <img
                       src={topMiddleMedia.src}
                       alt={topMiddleMedia.alt ?? "Aquarium detail 1"}
-                      className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-500"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                     />
                   ) : (
                     <div className="w-full h-full bg-[#242424]" />
                   )}
-                </div>
+                  {/* Subtle hover badge */}
+                  <div className="absolute bottom-2 left-2 px-2 py-0.5 bg-[#141414]/90 backdrop-blur-xs border border-[#2A2A2A] font-mono text-[8px] tracking-[0.12em] uppercase text-[#B8B8B8] opacity-0 group-hover:opacity-100 transition-opacity">
+                    SPECIMEN // 01
+                  </div>
+                </a>
               </PerspectiveCard>
 
               {/* Top-Right Tile */}
@@ -172,20 +201,29 @@ export const LivingGallerySection: React.FC<LivingGallerySectionProps> = ({
                 revealDistance={10}
                 delay={0.22}
                 maxTilt={2.0}
-                interactive={true}
-                once={false}
+                interactive={false}
+                once={true}
               >
-                <div className="relative aspect-[1.08/1] border border-[#2E2E2E] bg-[#242424] overflow-hidden">
+                <a
+                  href={instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative block aspect-[1.08/1] border border-[#2E2E2E] bg-[#1a1a1a] overflow-hidden"
+                >
                   {topRightMedia?.src ? (
                     <img
                       src={topRightMedia.src}
                       alt={topRightMedia.alt ?? "Aquarium detail 2"}
-                      className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-500"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                     />
                   ) : (
                     <div className="w-full h-full bg-[#242424]" />
                   )}
-                </div>
+                  {/* Subtle hover badge */}
+                  <div className="absolute bottom-2 left-2 px-2 py-0.5 bg-[#141414]/90 backdrop-blur-xs border border-[#2A2A2A] font-mono text-[8px] tracking-[0.12em] uppercase text-[#B8B8B8] opacity-0 group-hover:opacity-100 transition-opacity">
+                    SPECIMEN // 02
+                  </div>
+                </a>
               </PerspectiveCard>
             </div>
 
@@ -195,17 +233,17 @@ export const LivingGallerySection: React.FC<LivingGallerySectionProps> = ({
               revealDistance={12}
               delay={0.28}
               maxTilt={1.8}
-              interactive={true}
-              once={false}
+              interactive={false}
+              once={true}
             >
               <a
                 href={instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group w-full h-full flex flex-col border border-[#2E2E2E] bg-[#242424] overflow-hidden"
+                className="group w-full h-full flex flex-col border border-[#2E2E2E] bg-[#1a1a1a] overflow-hidden"
               >
                 {/* Wide Media Viewport */}
-                <div className="relative flex-1 min-h-[240px] sm:min-h-[270px] bg-[#242424] overflow-hidden">
+                <div className="relative flex-1 min-h-[240px] sm:min-h-[270px] bg-[#1a1a1a] overflow-hidden">
                   {bottomWideMedia?.src ? (
                     <img
                       src={bottomWideMedia.src}

@@ -14,7 +14,7 @@ export const StaggerGroup: React.FC<StaggerGroupProps> = ({
   className = "",
   staggerDelay = 0.06,
   delayChildren = 0.05,
-  once = false,
+  once = true,
   ...rest
 }) => {
   return (
@@ -47,7 +47,6 @@ export interface StaggerItemProps extends Omit<HTMLMotionProps<"div">, "variants
 }
 
 const EDITORIAL_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
-const REVERSE_EASE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
 export const StaggerItem: React.FC<StaggerItemProps> = ({
   children,
@@ -68,10 +67,6 @@ export const StaggerItem: React.FC<StaggerItemProps> = ({
           rotateX: depth ? 2 : 0,
           scale: depth ? 0.99 : 1,
           transformPerspective: 1200,
-          transition: {
-            duration: 0.4,
-            ease: REVERSE_EASE,
-          },
         },
         visible: {
           opacity: 1,
@@ -98,4 +93,3 @@ export const StaggerItem: React.FC<StaggerItemProps> = ({
 };
 
 export default StaggerGroup;
-
