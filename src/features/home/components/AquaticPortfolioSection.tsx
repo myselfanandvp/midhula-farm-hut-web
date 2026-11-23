@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ScrollReveal, PerspectiveCard, StaggerGroup, StaggerItem } from "../../../components/animations";
 
 export interface SpeciesItem {
   id: string;
@@ -67,7 +69,7 @@ const DEFAULT_SPECIES: SpeciesItem[] = [
   },
 ];
 
-interface AquaticPortfolioSectionProps {
+export interface AquaticPortfolioSectionProps {
   items?: SpeciesItem[];
   onSelectSpecies?: (item: SpeciesItem) => void;
 }
@@ -90,116 +92,148 @@ export const AquaticPortfolioSection: React.FC<AquaticPortfolioSectionProps> = (
   };
 
   return (
-    <section className="relative w-full bg-[#141414] text-white overflow-hidden select-none font-sans border-t border-[#262626]">
+    <section
+      id="aquatic-portfolio"
+      className="relative w-full bg-[#141414] text-white overflow-hidden select-none font-sans border-t border-[#262626]"
+    >
       {/* Main Content Container */}
       <div className="relative w-full max-w-[1440px] mx-auto px-6 sm:px-14 py-16 sm:py-24">
         {/* Top Header Row */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12 sm:mb-16">
           <div>
             {/* Magenta Eyebrow Pill */}
-            <div className="mb-5">
-              <span className="inline-block bg-[#C81D77] text-white font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.14em] uppercase px-2.5 py-1 leading-none">
-                02 // CURATED PORTFOLIO
-              </span>
-            </div>
+            <ScrollReveal delay={0.06} distance={8} depth={false} once={false}>
+              <div className="mb-5">
+                <span className="inline-block bg-[#C81D77] text-white font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.14em] uppercase px-2.5 py-1 leading-none">
+                  02 // CURATED PORTFOLIO
+                </span>
+              </div>
+            </ScrollReveal>
 
             {/* Display Headline */}
-            <h2 className="font-display text-[48px] sm:text-[68px] xl:text-[76px] leading-[0.94] tracking-[0.01em] uppercase text-white">
-              MEET THE AQUATIC WORLD.
-            </h2>
+            <ScrollReveal delay={0.12} distance={10} depth={true} once={false}>
+              <h2 className="font-display text-[48px] sm:text-[68px] xl:text-[76px] leading-[0.94] tracking-[0.01em] uppercase text-white">
+                MEET THE AQUATIC WORLD.
+              </h2>
+            </ScrollReveal>
           </div>
 
           {/* Right Helper Prompt */}
-          <p className="font-mono text-[10px] sm:text-[11px] leading-[1.6] tracking-[0.06em] text-[#9E9E9A] max-w-[270px] lg:pb-1">
-            Hover or select any numbered variety to inspect our documented ornamental fish
-            collection.
-          </p>
+          <ScrollReveal delay={0.18} distance={8} depth={false} once={false}>
+            <p className="font-mono text-[10px] sm:text-[11px] leading-[1.6] tracking-[0.06em] text-[#9E9E9A] max-w-[270px] lg:pb-1">
+              Hover or select any numbered variety to inspect our documented ornamental fish
+              collection.
+            </p>
+          </ScrollReveal>
         </div>
 
         {/* Lower Two-Column Showcase Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           {/* Left Column: Numbered Species List (01 - 06) */}
           <div className="lg:col-span-6 flex flex-col border-t border-[#262626]">
-            {items.map((item) => {
-              const isActive = item.id === activeItem?.id;
-              const numberColorClass =
-                item.accent === "magenta" ? "text-[#C81D77]" : "text-[#1E8E5A]";
+            <StaggerGroup staggerDelay={0.05} delayChildren={0.08} once={false}>
+              {items.map((item) => {
+                const isActive = item.id === activeItem?.id;
+                const numberColorClass =
+                  item.accent === "magenta" ? "text-[#C81D77]" : "text-[#1E8E5A]";
 
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onMouseEnter={() => handleInspect(item)}
-                  onFocus={() => handleInspect(item)}
-                  onClick={() => handleClick(item)}
-                  className={`group w-full flex items-center justify-between gap-4 py-4 sm:py-5 px-2 text-left border-b border-[#262626] transition-colors cursor-pointer ${
-                    isActive ? "bg-[#1B1B1B]" : "hover:bg-[#181818]"
-                  }`}
-                >
-                  <div className="flex items-baseline gap-4 sm:gap-6">
-                    <span
-                      className={`font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.12em] shrink-0 ${numberColorClass}`}
-                    >
-                      {item.index}
-                    </span>
-                    <span
-                      className={`font-display text-[26px] sm:text-[34px] leading-none tracking-[0.01em] uppercase transition-colors ${
-                        isActive ? "text-white" : "text-[#E6E6E3] group-hover:text-white"
+                return (
+                  <StaggerItem key={item.id} distance={8} depth={false}>
+                    <button
+                      type="button"
+                      onMouseEnter={() => handleInspect(item)}
+                      onFocus={() => handleInspect(item)}
+                      onClick={() => handleClick(item)}
+                      className={`group w-full flex items-center justify-between gap-4 py-4 sm:py-5 px-2 text-left border-b border-[#262626] transition-colors cursor-pointer ${
+                        isActive ? "bg-[#1B1B1B]" : "hover:bg-[#181818]"
                       }`}
                     >
-                      {item.label}
-                    </span>
-                  </div>
+                      <div className="flex items-baseline gap-4 sm:gap-6">
+                        <span
+                          className={`font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.12em] shrink-0 ${numberColorClass}`}
+                        >
+                          {item.index}
+                        </span>
+                        <span
+                          className={`font-display text-[26px] sm:text-[34px] leading-none tracking-[0.01em] uppercase transition-colors ${
+                            isActive ? "text-white" : "text-[#E6E6E3] group-hover:text-white"
+                          }`}
+                        >
+                          {item.label}
+                        </span>
+                      </div>
 
-                  {/* Top-Right Diagonal Arrow */}
-                  <svg
-                    className={`w-3.5 h-3.5 shrink-0 transition-transform duration-200 ${
-                      isActive
-                        ? "text-white translate-x-0.5 -translate-y-0.5"
-                        : "text-[#8E8E8E] group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    }`}
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M3.5 10.5L10.5 3.5M10.5 3.5H4.5M10.5 3.5V9.5"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="square"
-                    />
-                  </svg>
-                </button>
-              );
-            })}
+                      {/* Top-Right Diagonal Arrow */}
+                      <svg
+                        className={`w-3.5 h-3.5 shrink-0 transition-transform duration-200 ${
+                          isActive
+                            ? "text-white translate-x-0.5 -translate-y-0.5"
+                            : "text-[#8E8E8E] group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                        }`}
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M3.5 10.5L10.5 3.5M10.5 3.5H4.5M10.5 3.5V9.5"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="square"
+                        />
+                      </svg>
+                    </button>
+                  </StaggerItem>
+                );
+              })}
+            </StaggerGroup>
           </div>
 
           {/* Right Column: Framed Species Preview & Caption Card */}
           <div className="lg:col-span-6 w-full flex justify-center lg:justify-end">
-            <div className="w-full max-w-[460px] bg-[#181818] border border-[#2C2C2C] shadow-[4px_4px_0px_#C81D77] flex flex-col">
-              {/* Media Preview Viewport */}
-              <div className="relative w-full aspect-[4/4.3] bg-[#161616] overflow-hidden">
-                {activeItem?.imageSrc ? (
-                  <img
-                    src={activeItem.imageSrc}
-                    alt={activeItem.label}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-[#161616]" />
-                )}
-              </div>
-
-              {/* Bottom Caption Strip */}
-              <div className="border-t border-[#2A2A2A] bg-[#1C1C1C] px-5 py-4">
-                <div className="font-mono text-[10px] font-bold tracking-[0.14em] uppercase text-[#C81D77] mb-1.5">
-                  {activeItem?.captionCode}
+            <PerspectiveCard
+              className="w-full max-w-[460px]"
+              revealDistance={12}
+              delay={0.14}
+              maxTilt={2.2}
+              interactive={true}
+              once={false}
+            >
+              <div className="w-full bg-[#181818] border border-[#2C2C2C] shadow-[4px_4px_0px_#C81D77] flex flex-col">
+                {/* Media Preview Viewport with subtle AnimatePresence Cross-fade */}
+                <div className="relative w-full aspect-[4/4.3] bg-[#161616] overflow-hidden">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeItem?.id}
+                      initial={{ opacity: 0.65, scale: 0.99 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0.65, scale: 0.99 }}
+                      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                      className="w-full h-full"
+                    >
+                      {activeItem?.imageSrc ? (
+                        <img
+                          src={activeItem.imageSrc}
+                          alt={activeItem.label}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-[#161616]" />
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
-                <p className="font-sans text-[11px] sm:text-[12px] leading-[1.55] text-[#A3A3A3] max-w-[340px]">
-                  {activeItem?.description}
-                </p>
+
+                {/* Bottom Caption Strip */}
+                <div className="border-t border-[#2A2A2A] bg-[#1C1C1C] px-5 py-4">
+                  <div className="font-mono text-[10px] font-bold tracking-[0.14em] uppercase text-[#C81D77] mb-1.5">
+                    {activeItem?.captionCode}
+                  </div>
+                  <p className="font-sans text-[11px] sm:text-[12px] leading-[1.55] text-[#A3A3A3] max-w-[340px]">
+                    {activeItem?.description}
+                  </p>
+                </div>
               </div>
-            </div>
+            </PerspectiveCard>
           </div>
         </div>
       </div>

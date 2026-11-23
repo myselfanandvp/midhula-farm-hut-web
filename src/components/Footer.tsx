@@ -48,6 +48,8 @@ const NAV_LINKS: FooterLink[] = [
   },
 ];
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 export const Footer: React.FC<FooterProps> = ({
   brandName = "MIDHULA FARM HUT",
   instagramHandle = "@MIDHULA_FARM_HUT",
@@ -202,7 +204,7 @@ export const Footer: React.FC<FooterProps> = ({
         {/* Bottom Copyright & Edition Bar */}
         <div className="pt-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 font-mono text-[10px] tracking-[0.14em] uppercase text-[#737373]">
           <div>
-            © {new Date().getFullYear()} {brandName}. ALL RIGHTS RESERVED.
+            © {CURRENT_YEAR} {brandName}. ALL RIGHTS RESERVED.
           </div>
 
           <div className="flex items-center gap-3 text-[#8E8E8E]">
