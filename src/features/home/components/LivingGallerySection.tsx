@@ -20,8 +20,8 @@ export interface LivingGallerySectionProps {
 }
 
 const DEFAULT_FEATURED_LEFT: GalleryMedia = {
-  src: "/images/instagram/gallery-betta.jpg",
-  alt: "Dark minimalist aquarium setup with volcanic stone and show-grade Betta",
+  src: "/images/instagram/gallery-tank-1.jpg",
+  alt: "White Halfmoon Betta with flowing fins",
 };
 
 const DEFAULT_TOP_MIDDLE: GalleryMedia = {

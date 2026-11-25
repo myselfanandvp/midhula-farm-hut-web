@@ -3,14 +3,12 @@ import type { JSX } from "react";
 import { HomePage } from "./features/home";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import CustomCursor from "./components/ui/CustomCursor";
 import ScrollProgressBar from "./components/ui/ScrollProgressBar";
 import NoiseOverlay from "./components/ui/NoiseOverlay";
 
 function App(): JSX.Element {
   return (
     <>
-      <CustomCursor />
       <ScrollProgressBar />
       <NoiseOverlay />
       <Navbar />

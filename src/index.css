@@ -12,11 +12,6 @@ html {
   background-color: #141414;
 }
 
-/* Hide native cursor on non-touch devices when our custom cursor is active */
-@media (pointer: fine) {
-  * { cursor: none !important; }
-}
-
 /* Editorial 3D perspective primitives */
 .perspective-container {
   perspective: 1200px;
@@ -53,6 +48,10 @@ html {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shimmer-sweep 6s linear infinite;
+}
+
+.hero-headline {
+  filter: drop-shadow(0 3px 12px rgba(0, 0, 0, 0.72));
 }
 
 /* Smooth image pan on hover */

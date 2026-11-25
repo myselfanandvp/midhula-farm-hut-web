@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from "react";
+import React, { useRef, useState, useCallback, useEffect } from "react";
 import { motion, useMotionValue, useSpring, useTransform, type HTMLMotionProps } from "framer-motion";
 
 export interface PerspectiveCardProps extends Omit<HTMLMotionProps<"div">, "initial" | "whileInView" | "viewport"> {
@@ -31,6 +31,20 @@ export const PerspectiveCard: React.FC<PerspectiveCardProps> = ({
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [canTilt, setCanTilt] = useState(false);
+
+  useEffect(() => {
+    const pointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setCanTilt(pointer.matches && !motion.matches);
+    update();
+    pointer.addEventListener("change", update);
+    motion.addEventListener("change", update);
+    return () => {
+      pointer.removeEventListener("change", update);
+      motion.removeEventListener("change", update);
+    };
+  }, []);
 
   // Raw mouse coordinates normalized from -0.5 to 0.5
   const mouseX = useMotionValue(0);
@@ -46,22 +60,22 @@ export const PerspectiveCard: React.FC<PerspectiveCardProps> = ({
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      if (!interactive || !cardRef.current) return;
+      if (!interactive || !canTilt || !cardRef.current) return;
       const rect = cardRef.current.getBoundingClientRect();
       const xPct = (e.clientX - rect.left) / rect.width - 0.5;
       const yPct = (e.clientY - rect.top) / rect.height - 0.5;
       mouseX.set(xPct);
       mouseY.set(yPct);
     },
-    [interactive, mouseX, mouseY]
+    [interactive, canTilt, mouseX, mouseY]
   );
 
   const handleMouseEnter = () => {
-    if (interactive) setIsHovered(true);
+    if (interactive && canTilt) setIsHovered(true);
   };
 
   const handleMouseLeave = () => {
-    if (!interactive) return;
+    if (!interactive || !canTilt) return;
     setIsHovered(false);
     mouseX.set(0);
     mouseY.set(0);
@@ -106,9 +120,9 @@ export const PerspectiveCard: React.FC<PerspectiveCardProps> = ({
       <motion.div
         style={{
           transformStyle: "preserve-3d",
-          rotateX: interactive && isHovered ? rotateX : 0,
-          rotateY: interactive && isHovered ? rotateY : 0,
-          transition: isHovered ? "none" : "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+          rotateX: interactive && canTilt && isHovered ? rotateX : 0,
+          rotateY: interactive && canTilt && isHovered ? rotateY : 0,
+          transition: isHovered ? "none" : "transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)",
         }}
         className="w-full h-full"
       >

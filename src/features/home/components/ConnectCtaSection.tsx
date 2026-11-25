@@ -2,14 +2,14 @@ import React from "react";
 import { ScrollReveal, PerspectiveCard, CutoutReveal } from "../../../components/animations";
 
 export interface ConnectCtaSectionProps {
-  /** Transparent PNG cutout of the Betta fish (facing down-right) */
+  /** Betta photograph displayed in the contact panel */
   fishImageSrc?: string;
   instagramUrl?: string;
   onLetsTalkClick?: () => void;
 }
 
 export const ConnectCtaSection: React.FC<ConnectCtaSectionProps> = ({
-  fishImageSrc = "/images/betta-cutout.png",
+  fishImageSrc = "/images/instagram/gallery-tank-2.jpg",
   instagramUrl = "https://instagram.com/mithula_farm_hut",
   onLetsTalkClick,
 }) => {
@@ -72,29 +72,30 @@ export const ConnectCtaSection: React.FC<ConnectCtaSectionProps> = ({
               />
             </svg>
 
-            {/* Left Typography & Dual Buttons */}
-            <div className="relative z-10 max-w-[540px]">
-              {/* Green Mono Eyebrow */}
-              <ScrollReveal delay={0.1} distance={8} depth={false} once={true}>
-                <div className="mb-4">
-                  <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.14em] uppercase text-[#1E8E5A]">
-                    05 // CONNECT WITH US
-                  </span>
-                </div>
-              </ScrollReveal>
+            <div className="relative z-10 grid items-center gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(380px,0.85fr)]">
+              {/* Typography & Dual Buttons */}
+              <div className="w-full max-w-[540px]">
+                {/* Green Mono Eyebrow */}
+                <ScrollReveal delay={0.1} distance={8} depth={false} once={true}>
+                  <div className="mb-4">
+                    <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.14em] uppercase text-[#1E8E5A]">
+                      05 // CONNECT WITH US
+                    </span>
+                  </div>
+                </ScrollReveal>
 
-              {/* Two-Line Condensed Headline */}
-              <ScrollReveal delay={0.16} distance={10} depth={true} once={true}>
-                <h2 className="font-display text-[48px] sm:text-[64px] xl:text-[74px] leading-[0.94] tracking-[0.01em] uppercase text-white mb-8">
-                  YOUR AQUATIC
-                  <br />
-                  WORLD STARTS HERE.
-                </h2>
-              </ScrollReveal>
+                {/* Two-Line Condensed Headline */}
+                <ScrollReveal delay={0.16} distance={10} depth={true} once={true}>
+                  <h2 className="font-display text-[48px] sm:text-[64px] xl:text-[74px] leading-[0.94] tracking-[0.01em] uppercase text-white mb-8">
+                    YOUR AQUATIC
+                    <br />
+                    WORLD STARTS HERE.
+                  </h2>
+                </ScrollReveal>
 
-              {/* CTA Action Row */}
-              <ScrollReveal delay={0.24} distance={10} depth={false} once={true}>
-                <div className="flex flex-wrap items-center gap-4">
+                {/* CTA Action Row */}
+                <ScrollReveal delay={0.24} distance={10} depth={false} once={true}>
+                  <div className="flex flex-wrap items-center gap-4">
                   {/* Primary Solid Off-White Button */}
                   <button
                     type="button"
@@ -126,25 +127,26 @@ export const ConnectCtaSection: React.FC<ConnectCtaSectionProps> = ({
                     </svg>
                     <span>FOLLOW ON INSTAGRAM</span>
                   </a>
-                </div>
-              </ScrollReveal>
-            </div>
+                  </div>
+                </ScrollReveal>
+              </div>
 
-            {/* Right Overflowing Betta Fish Cutout (Breaks top & bottom edges of card) */}
-            <div className="pointer-events-none hidden md:block absolute -top-16 lg:-top-20 -bottom-8 lg:-bottom-10 -right-4 lg:-right-6 w-[48%] lg:w-[46%] max-w-[560px] z-20">
-              <CutoutReveal
-                delay={0.18}
-                duration={0.8}
-                floatDistance={6}
-                once={true}
-                className="w-full h-full flex justify-end items-center"
-              >
-                <img
-                  src={fishImageSrc}
-                  alt="Halfmoon Betta fish"
-                  className="w-full h-full object-contain object-right drop-shadow-[-10px_18px_28px_rgba(0,0,0,0.45)]"
-                />
-              </CutoutReveal>
+              {/* Responsive Betta photo stays in its own grid column */}
+              <div className="relative w-full max-w-[520px] aspect-[1.55/1] justify-self-center overflow-hidden bg-[#202020]">
+                <CutoutReveal
+                  delay={0.18}
+                  duration={0.8}
+                  floatDistance={6}
+                  once={true}
+                  className="w-full h-full"
+                >
+                  <img
+                    src={fishImageSrc}
+                    alt="Blue and red Halfmoon Betta"
+                    className="w-full h-full object-cover object-center"
+                  />
+                </CutoutReveal>
+              </div>
             </div>
           </div>
         </PerspectiveCard>

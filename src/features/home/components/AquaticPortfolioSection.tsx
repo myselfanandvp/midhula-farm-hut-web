@@ -204,7 +204,7 @@ export const AquaticPortfolioSection: React.FC<AquaticPortfolioSectionProps> = (
               interactive={false}
               once={true}
             >
-              <div className="w-full bg-[#181818] border border-[#2C2C2C] shadow-[4px_4px_0px_#C81D77] flex flex-col">
+              <div className="w-full bg-[#181818] border border-[#2C2C2C] flex flex-col">
                 {/* Media Preview Viewport with subtle AnimatePresence Cross-fade */}
                 <div className="relative w-full aspect-[4/4.3] bg-[#161616] overflow-hidden">
                   <AnimatePresence mode="wait">

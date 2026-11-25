@@ -108,7 +108,7 @@ export const EditorialIntroSection: React.FC<EditorialIntroSectionProps> = ({
               interactive={false}
               once={true}
             >
-              <div className="relative w-full bg-[#141414] pr-6 sm:pr-8 shadow-[3px_3px_0px_#1E8E5A]">
+              <div className="relative w-full">
                 {/* Inner Media Box (Top-Left Flush, Thin Top & Left Border) */}
                 <div className="relative w-full aspect-[16/10] bg-[#F7F7F5] border-t border-l border-[#9E9E9A] overflow-hidden">
                   {mediaSrc ? (
@@ -117,14 +117,13 @@ export const EditorialIntroSection: React.FC<EditorialIntroSectionProps> = ({
                     /* Empty canvas matching the clean placeholder in the reference */
                     <div className="w-full h-full bg-[#F7F7F5]" />
                   )}
-                </div>
-
-                {/* Bottom Dark Caption Bar */}
-                <div className="flex items-center justify-between px-4 sm:px-5 py-3.5 bg-[#141414]">
-                  <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.15em] uppercase text-[#9E9E9A]">
-                    ORNAMENTAL AQUACULTURE // KERALA
-                  </span>
-                  <span aria-hidden="true" className="w-2 h-2 rounded-full bg-[#1E8E5A] shrink-0" />
+                  {/* Caption overlay keeps the image label readable */}
+                  <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 bg-[#141414]/90 px-4 py-3.5 text-white backdrop-blur-sm sm:px-5">
+                    <span className="font-mono text-[9px] tracking-[0.15em] uppercase sm:text-[10px]">
+                      ORNAMENTAL AQUACULTURE // KERALA
+                    </span>
+                    <span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-full bg-[#1E8E5A]" />
+                  </div>
                 </div>
               </div>
             </PerspectiveCard>

@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useScroll, useMotionValueEvent } from "framer-motion";
+import { motion, useMotionValue, useReducedMotion, useScroll, useMotionValueEvent, useTransform } from "framer-motion";
 import { ScrollReveal, PerspectiveCard, CutoutReveal } from "../../../components/animations";
 import jumpingFishVideo from "../../../assets/videos/jumping_fish_hero.mp4";
 
 export interface HeroSectionProps {
-  /** Transparent PNG cutout fallback of the Betta fish & water splash */
+  /** Betta photograph fallback when the hero video is unavailable */
   fishImageSrc?: string;
   /** Video file URL or imported asset to scrub frame-by-frame on scroll */
   videoSrc?: string;
@@ -12,21 +12,19 @@ export interface HeroSectionProps {
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
-  fishImageSrc = "/images/betta-cutout.png",
+  fishImageSrc = "/images/instagram/gallery-tank-1.jpg",
   videoSrc = jumpingFishVideo || "/videos/jumping_fish_hero.mp4",
   onExploreClick,
 }) => {
   const containerRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const videoDurationRef = useRef<number>(0);
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [isVideoReady, setIsVideoReady] = useState<boolean>(false);
+  const playheadProgress = useMotionValue(0);
 
-  // Tracking seeking state to prevent browser decoding backlog during rapid scrolls
-  const isSeekingRef = useRef<boolean>(false);
-  const pendingTimeRef = useRef<number | null>(null);
-  const seekTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const targetTimeRef = useRef<number>(0);
+  const easedTimeRef = useRef<number>(0);
   const rafRef = useRef<number | null>(null);
 
   // Scroll tracking across the extended scroll distance (300vh)
@@ -34,65 +32,44 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     target: containerRef,
     offset: ["start start", "end end"],
   });
+  const prefersReducedMotion = useReducedMotion();
+  const copyY = useTransform(playheadProgress, [0, 1], [0, 160]);
+  const copyOpacity = useTransform(playheadProgress, [0, 1], [1, 0]);
+  const endDimOpacity = useTransform(playheadProgress, [0.58, 1], [0, 0.5]);
 
-  // Dedicated frame seek dispatcher
-  const seekTo = (targetTime: number) => {
+  // Ease the playhead toward the latest scroll position. Seeking only after the
+  // previous frame has decoded prevents a backlog of stale decoder requests.
+  const advancePlayhead = () => {
     const video = videoRef.current;
     if (!video || !video.duration || isNaN(video.duration)) return;
+    if (video.seeking) return;
 
-    // Clamp within valid video timeline bounds
-    const clampedTime = Math.max(0, Math.min(targetTime, Math.max(0, video.duration - 0.02)));
-
-    // If the decoder is currently busy seeking, store as pending
-    if (isSeekingRef.current) {
-      pendingTimeRef.current = clampedTime;
-      return;
-    }
-
-    // Only issue seek if difference exceeds micro-threshold
-    if (Math.abs(video.currentTime - clampedTime) > 0.015) {
-      isSeekingRef.current = true;
-      video.currentTime = clampedTime;
-
-      // Safety watchdog: ensure isSeeking unblocks if browser drops seeked event
-      if (seekTimeoutRef.current) clearTimeout(seekTimeoutRef.current);
-      seekTimeoutRef.current = setTimeout(() => {
-        isSeekingRef.current = false;
-        if (pendingTimeRef.current !== null) {
-          const next = pendingTimeRef.current;
-          pendingTimeRef.current = null;
-          seekTo(next);
-        }
-      }, 100);
+    const nextTime = easedTimeRef.current + (targetTimeRef.current - easedTimeRef.current) * 0.22;
+    easedTimeRef.current = nextTime;
+    playheadProgress.set(nextTime / video.duration);
+    if (Math.abs(video.currentTime - nextTime) > 0.035) video.currentTime = nextTime;
+    if (Math.abs(targetTimeRef.current - nextTime) > 0.02) {
+      rafRef.current = requestAnimationFrame(advancePlayhead);
     }
   };
 
-  // Called when video element finishes seeking to current frame
   const handleSeeked = () => {
-    isSeekingRef.current = false;
-    if (seekTimeoutRef.current) {
-      clearTimeout(seekTimeoutRef.current);
-      seekTimeoutRef.current = null;
-    }
-
-    // If a new frame was requested while seeking, dispatch immediately
-    if (pendingTimeRef.current !== null) {
-      const nextTime = pendingTimeRef.current;
-      pendingTimeRef.current = null;
-      seekTo(nextTime);
-    }
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(advancePlayhead);
   };
 
   // Handle video metadata loaded
   const handleLoadedMetadata = () => {
     const video = videoRef.current;
     if (video && video.duration) {
-      videoDurationRef.current = video.duration;
       setIsVideoReady(true);
 
       // Render the very first frame immediately
       const initialProgress = scrollYProgress.get();
       const initialTime = Math.max(0, Math.min(initialProgress * video.duration, video.duration - 0.02));
+      targetTimeRef.current = initialTime;
+      easedTimeRef.current = initialTime;
+      playheadProgress.set(initialTime / video.duration);
       video.currentTime = initialTime;
     }
   };
@@ -105,20 +82,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       cancelAnimationFrame(rafRef.current);
     }
 
-    rafRef.current = requestAnimationFrame(() => {
-      const video = videoRef.current;
-      if (video && video.duration && !isNaN(video.duration)) {
-        const targetTime = latest * video.duration;
-        seekTo(targetTime);
-      }
-    });
+    const video = videoRef.current;
+    if (video && video.duration && !isNaN(video.duration)) {
+      targetTimeRef.current = Math.max(0, Math.min(latest * video.duration, video.duration - 0.02));
+    } else {
+      playheadProgress.set(latest);
+    }
+    rafRef.current = requestAnimationFrame(advancePlayhead);
   });
 
   // Cleanup timers and rAF on unmount
   useEffect(() => {
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      if (seekTimeoutRef.current) clearTimeout(seekTimeoutRef.current);
     };
   }, []);
 
@@ -130,8 +106,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       target?.scrollIntoView({ behavior: "smooth" });
     }
   };
-
-  const progressPercent = Math.min(100, Math.max(0, Math.round(scrollProgress * 100)));
 
   return (
     <section
@@ -162,7 +136,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           ) : null}
 
           {/* Fallback image cutout if videoSrc is absent */}
-          {!videoSrc && fishImageSrc && (
+          {!videoSrc && fishImageSrc ? (
             <div className="pointer-events-none absolute right-0 bottom-0 z-10 w-[85%] sm:w-[62%] md:w-[54%] max-w-[740px] flex justify-end items-end">
               <CutoutReveal
                 delay={0.16}
@@ -173,15 +147,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               >
                 <img
                   src={fishImageSrc}
-                  alt="Halfmoon Betta fish with water splash"
+                  alt="White Halfmoon Betta with flowing fins"
                   className="w-full h-auto object-contain object-bottom drop-shadow-[-12px_16px_28px_rgba(0,0,0,0.12)]"
                 />
               </CutoutReveal>
             </div>
-          )}
+          ) : null}
 
           {/* Subtle bottom vignette only — keeps video fully visible */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#141414]/60 via-transparent to-transparent pointer-events-none" />
+          <motion.div
+            aria-hidden="true"
+            className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-b from-transparent via-black/20 to-black/55"
+            style={{ opacity: prefersReducedMotion ? 0 : endDimOpacity }}
+          />
         </div>
 
         {/* Foreground Content Container (Overlaid on top of the video) */}
@@ -195,7 +174,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             interactive={false}
             once={true}
           >
-            <div className="w-full text-white px-7 py-9 sm:px-12 sm:py-12">
+            <motion.div
+              style={prefersReducedMotion ? undefined : { y: copyY, opacity: copyOpacity }}
+              className="w-full origin-center bg-[#101010]/45 px-7 py-9 text-white shadow-[0_18px_50px_rgba(0,0,0,0.24)] backdrop-blur-sm sm:px-12 sm:py-12"
+            >
               {/* Top Metadata Eyebrow Row */}
               <ScrollReveal delay={0.08} distance={8} depth={false} once={true}>
                 <div className="flex flex-wrap items-center gap-3 mb-7 font-mono text-[10px] sm:text-[11px] tracking-[0.14em] uppercase">
@@ -208,8 +190,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
               {/* Display Headline */}
               <ScrollReveal delay={0.15} distance={10} depth={true} once={true}>
-                <h1 className="font-display text-[54px] sm:text-[76px] md:text-[84px] leading-[0.94] tracking-[0.01em] uppercase text-white mb-6">
-                  DISCOVER A
+                <h1 className="hero-headline mb-6 font-display text-[54px] leading-[0.94] tracking-[0.01em] text-white sm:text-[76px] md:text-[84px]">
+                  <span className="text-shimmer">DISCOVER A</span>
                   <br />
                   <span className="text-shimmer">WORLD BELOW.</span>
                 </h1>
@@ -253,7 +235,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   </span>
                 </div>
               </ScrollReveal>
-            </div>
+            </motion.div>
           </PerspectiveCard>
         </div>
 
@@ -273,19 +255,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <span>{scrollProgress >= 0.96 ? "SCROLL FOR NEXT SECTION" : "SCROLL TO PLAY VIDEO"}</span>
           </div>
 
-          {/* Video Scrub Timeline & Progress Gauge */}
-          {videoSrc && (
-            <div className="inline-flex items-center gap-3 bg-[#141414]/90 backdrop-blur-xs border border-[#333333] px-3.5 py-1.5 font-mono text-[9px] sm:text-[10px] tracking-[0.12em] uppercase text-[#E5E5E5]">
-              <span className="w-2 h-2 rounded-full bg-[#1E8E5A] shrink-0" />
-              <span>FRAME // {progressPercent}%</span>
-              <div className="w-16 sm:w-20 h-[3px] bg-[#2E2E2E] overflow-hidden ml-1">
-                <div
-                  className="h-full bg-[#C81D77] transition-all duration-75"
-                  style={{ width: `${progressPercent}%` }}
-                />
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </section>

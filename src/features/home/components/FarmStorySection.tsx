@@ -2,12 +2,12 @@ import React from "react";
 import { ScrollReveal, PerspectiveCard, CutoutReveal } from "../../../components/animations";
 
 export interface FarmStorySectionProps {
-  /** Transparent PNG cutout of the Betta fish (facing down-left) */
+  /** Farm Betta photograph used in the story frame */
   fishImageSrc?: string;
 }
 
 export const FarmStorySection: React.FC<FarmStorySectionProps> = ({
-  fishImageSrc = "/images/betta-cutout-left.png",
+  fishImageSrc = "/images/instagram/gallery-betta.jpg",
 }) => {
   return (
     <section
@@ -54,13 +54,13 @@ export const FarmStorySection: React.FC<FarmStorySectionProps> = ({
               once={true}
             >
               <div className="relative w-full aspect-[1.28/1] bg-[#141414] shadow-[3px_3px_0px_#C81D77]">
-                {/* Overflowing Betta Fish Cutout (Breaks out of top & right edges) */}
-                <div className="pointer-events-none absolute -top-24 sm:-top-32 -left-4 sm:-left-6 w-[108%] z-20">
+                {/* Betta photograph layered over the dark story frame */}
+                <div className="pointer-events-none absolute -top-24 sm:-top-32 -left-4 sm:-left-6 w-[108%] aspect-[1.28/1] z-20">
                   <CutoutReveal delay={0.16} duration={0.8} floatDistance={6} once={true}>
                     <img
                       src={fishImageSrc}
                       alt="Halfmoon Betta fish specimen"
-                      className="w-full h-auto object-contain drop-shadow-[0_18px_24px_rgba(0,0,0,0.35)]"
+                      className="w-full h-full object-cover object-center drop-shadow-[0_18px_24px_rgba(0,0,0,0.35)]"
                     />
                   </CutoutReveal>
                 </div>
